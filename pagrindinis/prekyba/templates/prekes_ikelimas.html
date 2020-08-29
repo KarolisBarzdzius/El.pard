@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+{% load static %}
+<article class="container">
+    {% if request.user.pardavejas.pavad %}
+    <div class="col virs">
+        {% if messages %}
+        {% for message in messages %}
+        <h4 class="">{{ message }}</h4>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <form method="POST" class="">   {% csrf_token %}
+        <h2>{{ request.user.pardavejas.pavad }}</h2>
+    </form>
+
+    <hr>
+    <h2>{% trans "Prekes Ikelimas" %}:</h2>
+
+    <form method="POST" class="" enctype='multipart/form-data'> {% csrf_token %}
+
+        {{ preke|crispy}}
+
+        <div class="form-group d-flex justify-content-around apac ">
+            <button class="btn btn-success col" name="prek" type="submit">{% trans "Pateikti" %}</button>
+        </div>
+    </form>
+
+    <h2>{% trans "Prekes Kiekis" %}:</h2>
+
+    <form method="POST" class="">   {% csrf_token %}
+
+        {{ sandelys |crispy}}
+
+        <div class="form-group d-flex justify-content-around apac ">
+            <button class="btn btn-success col" name="sand" type="submit">{% trans "Saugoti" %}</button>
+        </div>
+    </form>
+     {% endif %}
+</article>
+{% endblock %}

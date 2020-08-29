@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+<div class="row">
+    <h2 class="col">{% trans "Profilis" %}</h2>
+    <div class="col virs">
+        {% if messages %}
+        {% for message in messages %}
+        <h4 class="">{{ message }}</h4>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<hr>
+<div class="profilis d-flex flex-column justify-content-center ">
+  <div class="media">
+      <img class="rounded-circle " src="{{ user.profilis.nuotrauka.url }}">
+      <div class="media-body col">
+          <h3 class="">{{ user.username }}</h3>
+          <p class="">{{ user.email }}</p>
+
+              {% if user.profilis.adresas%}
+          <p class="">{{ user.profilis.adresas }}</p>
+              {% endif %}
+
+              {% if user.profilis.telefono_numeris%}
+          <p class="">{{ user.profilis.telefono_numeris }}</p>
+              {% endif %}
+          <p>
+              <a href="{% url 'krepselis' user.krepselis.id%}" >{% trans "Krepselis//Suma" %}: {{ user.krepselis.bendra_suma }}</a>
+          </p>
+      </div>
+  </div>
+
+   <form method="POST" class="" enctype='multipart/form-data'>
+        {% csrf_token %}
+
+            {{ u_form |crispy}}
+            {{ p_form |crispy}}
+
+        <div class="form-group d-flex justify-content-around apac ">
+            <button class="btn btn-success col" type="submit">{% trans "Atnaujinti" %}</button>
+            {%if request.user.pardavejas%}
+            <a class="btn btn-info text-white col" href="{% url 'ikelimas' %}">{% trans "Ikelti Preke Pardavimui" %}</a>
+            <a class="btn btn-info text-white col" href="{% url 'pardavejo_kurimas' %}">{% trans "Istrinti Pardaveja" %}</a>
+            {% elif request.user.email and request.user.profilis.telefono_numeris and not request.user.pardavejas%}
+            <a class="btn btn-info text-white col" href="{% url 'pardavejo_kurimas' %}">{% trans "Tapti Pardaveju" %}</a>
+            {% else %}
+            <p>{% trans "Norint tapti pardaveju reikalingas uzpildytas profilis" %}</p>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% endblock content %}

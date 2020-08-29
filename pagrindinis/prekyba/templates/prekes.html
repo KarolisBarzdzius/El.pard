@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+{% load static %}
+<h2>{% trans "Prekes" %}</h2>
+
+<div class="paginatorius">
+{% if prekes.has_other_pages %}
+    <ul class="pagination pagination-sm justify-content-end">
+        {% for i in prekes.paginator.page_range %}
+            {% if prekes.number == i %}
+                <li class="page-item active">
+                    <a class="page-link" href="">{{ i }}</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}
+</div>
+
+{% if prekes %}
+<section class="">
+    {% for preke in prekes %}
+    <div class="prekes">
+        {% if preke.nuotrauka %}
+        <img src="{{ preke.nuotrauka.url }}" alt="">
+        {% else %}
+        <img src="{% static 'img/no-image.png' %}">
+        {% endif %}
+
+        <div class="container">
+                {% if preke.gauti > 0 %}
+            <h3><a  href="{{ preke.id }}">{{ preke.pavadinimas }}</a></h3>
+            <p>{% trans "Vnt.Kaina" %}: {{ preke.kaina }}</p>
+            <p>{% trans "Liko" %}: {{ preke.gauti }}</p>
+               <p>{% trans "Atsiliepimai" %}: {{ preke.atsil_sk }} </p>
+            <p>{% trans "Pardavejas" %}: <a href="{% url 'pardavejas' pardavejas_id=preke.pardavejas_id.id %}">{{ preke.pardavejas_id.pavad }}</a></p>
+                {% else %}
+            <h3>{{ preke.pavadinimas }}</h3>
+            <p>{% trans "Vnt.Kaina" %}: {{ preke.kaina }}</p>
+            <p>{% trans "Preke isparduota" %}</p>
+            <p>{% trans "Pardavejas" %}: <a href="{% url 'pardavejas' pardavejas_id=preke.pardavejas_id.id %}">{{ preke.pardavejas_id.pavad }}</a></p>
+                {% endif %}
+        </div>
+    </div>
+
+    {% endfor %}
+    {% else %}
+      <p>{% trans "Prekiu nera" %}.</p>
+    {% endif %}
+</section>
+
+<div class="paginatorius">
+{% if prekes.has_other_pages %}
+    <ul class="pagination pagination-sm justify-content-end">
+        {% for i in prekes.paginator.page_range %}
+            {% if prekes.number == i %}
+                <li class="page-item active">
+                    <a class="page-link" href="">{{ i }}</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}
+</div>
+{% endblock %}

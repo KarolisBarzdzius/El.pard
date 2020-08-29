@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <hr>
+    <h2>{% trans "Krepselis" %}:</h2>
+    <hr>
+
+<section class="krep">
+    {% for pre in uzsakymas %}
+    <div class="border rounded bg-info ">
+            <p><strong>{% trans "Preke" %}:</strong> <a class=""  >{{ pre.sandelio_id.prekes_id.pavadinimas }}</a></p>
+            <p>
+                <strong>{% trans "Vnt. Kaina" %}:</strong> {{ pre.sandelio_id.prekes_id.kaina }}
+                <strong>{% trans "Kiekis" %}:</strong>
+            </p>
+            <p><strong>{% trans "Kaina" %}:</strong> {{ pre.uzsakymo_kaina }}</p>
+        <div>
+        <a class=" btn btn-danger" href="">{% trans "Ištrinti" %}</a>-Nope
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+    <a class="btn btn-success" href="">{% trans "Saugoti" %}</a>
+    <h4>{% trans "Krepselio Suma" %}: {{ b.bendra_suma }}</h4>
+
+
+{% endblock %}

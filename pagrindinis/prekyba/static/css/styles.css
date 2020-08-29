@@ -1,0 +1,419 @@
+ul{
+  list-style: none;
+  margin:0;
+}
+
+a:hover,a{
+  text-decoration: none;
+}
+
+main{
+  position: relative;
+  min-height: calc(100vh - 180px);
+}
+
+section{
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(5,1fr);
+
+}
+
+section h3{
+   word-break: break-word;
+}
+
+section div img{
+  height: 12em;
+  width: 100%;
+  border-radius: 15%;
+  margin:0 0 10px 0;
+}
+
+header{
+background-image: url('../../media/background/col.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+height:80px;
+position: sticky;
+top: 0;
+z-index:2
+}
+
+body{
+display:flex;
+flex-direction:column;
+padding:0 20px 0 20px;
+background-image: url('../../media/background/color.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+max-width:1280px;
+margin:0 auto;
+}
+
+html{
+background-color:Gray;
+}
+
+
+header h1{
+font-size:45px;
+color:#2EF014;
+font-weight:bold;
+font-style:italic;
+margin:0;
+}
+
+main h2,.registruotis{
+color:#2EF014;
+font-weight:bold;
+font-style:italic;
+}
+
+.registracija label,.registracija p{
+color:white;
+}
+.registracija a,.registracija a:hover{
+color:#2EF014;
+}
+
+.atsijungimas p,.atsijungimas a{
+color:white;
+}
+.atsijungimas a:hover{
+color:#2EF014 ;
+}
+
+.paieska a{
+color:white;
+}
+
+.prekes h3{
+font-weight:bold;
+font-style:italic;
+}
+.prekes h4, .prekes p{
+color:white;
+}
+.prekes a{
+color:#2EF014 ;
+}
+.meniu ul li a{
+font-weight:bold;
+font-style:italic;
+margin: 2px;
+}
+
+.atsi img{
+width:100px;
+height:100px;
+border-radius:30px;
+}
+
+.virs h4{
+margin:15px 0 0 0;
+font-size:30px;
+font-weight:bold;
+color:BlueViolet;
+}
+
+.krep a{
+color:#2EF014  ;
+font-size:20px;
+font-weight:bold;
+}
+.krep p,
+.naudojimosi p
+{
+color:white;
+}
+.krep div{
+border:1px solid black;
+}
+
+.kontaktai p{
+color:white;
+font-size:30px;
+}
+
+.zalia{
+color:#2EF014 ;
+}
+
+
+.pardavejai a{
+color:white;
+}
+
+.pardavejas p{
+color:white;
+}
+
+.apr p{
+height:270px;
+word-break: break-all;
+}
+
+.a{
+background-color:DarkOrange;
+}
+
+.apac a{
+margin-left:10px;
+}
+
+.profilis img{
+ width:250px;
+ height:250px;
+ margin-right:30px;
+ margin-bottom:30px;
+}
+.profilis p{
+color:white;
+}
+.profilis h3{
+font-size:40px;
+font-weight:bold;
+}
+
+.paginatorius{
+margin:10px 0 10px 0;
+}
+
+.prek_pavad{
+margin:15px 0 0 0;
+}
+
+.nuot{
+object-fit:contain;
+}
+
+.cover{
+object-fit:contain;
+}
+
+.prekes{
+border-radius:33px;
+border:1px solid black;
+}
+.prekes img{
+border:1px solid black;
+}
+
+.istrinimas legend{
+color:white;
+}
+
+.pirkimas p{
+color:white;
+}
+
+.karusele{
+width:800px;
+}
+
+.pagrindinio_apac{
+margin-top:30px;
+background-image: url('../../media/background/col.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+height:70px;
+}
+.pagrindinio_apac ul{
+padding:16px;
+}
+
+.pagrindinis_virsus{
+
+}
+
+.prisijungimas{
+display:flex;
+justify-content:center;
+}
+.prisijungimas form{
+margin-top: 70px;
+}
+.prisijungimas p,td{
+color:white;
+}
+
+.meniu{
+display:flex;
+flex-direction:columns;
+}
+.meniu li{
+margin:20px;
+}
+
+.pagr_paginatorius{
+display:flex;
+justify-content:center;
+}
+.pagr_paginatorius ul li{
+margin:5px;
+margin-top:10px;
+}
+.page-item.active .page-link{
+background-color:#2EF014 ;
+border-color:#2EF014 ;
+}
+
+.perkamiausios div{
+margin:0 10px 0 10px ;
+}
+.perkamiausios img{
+width:100px;
+height:100px;
+object-fit:cover;
+border:1px solid #2EF014 ;
+}
+
+.atsiliepimas form button{
+margin-left:10px;
+margin-bottom:30px;
+}
+.atsiliepimas p,
+.preke p,
+.preke li
+{
+color:white;
+}
+
+
+.code-virsus{
+height:100px;
+}
+
+.code{
+position:relative;
+min-height: calc(100vh - 100px);
+}
+#editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.language_form button{
+}
+.language_form select{
+width:50px;
+height:37px;
+border:2px solid black;
+border-radius:10px;
+}
+.language_form option{
+border:2px solid black;
+border-radius:10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index:-999;
+}
+
+
+
+/* The side navigation menu */
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  right: 0;
+  background-image: url('../../media/background/youth1.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a{
+  padding:0 auto;
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+  transition: 0.1s;
+  margin:0 auto;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+#main {
+  transition: margin-right .5s;
+  padding: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width:1000px){
+    section{
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: repeat(4,1fr);
+    }
+}
+@media only screen and (max-width:550px){
+    section{
+      display: grid;
+      grid-gap: 15px;
+      grid-template-columns: repeat(3,1fr);
+    }
+}

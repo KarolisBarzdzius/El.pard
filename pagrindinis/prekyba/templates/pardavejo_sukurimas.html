@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+<div class="content-section">
+
+<form method="POST">    {% csrf_token %}
+<h2>{% trans "Pardavejas" %}:</h2>
+
+{% if request.user.pardavejas.pavad %}
+<hr>
+<h2>{{ request.user.pardavejas.pavad }}</h2>
+<hr>
+
+<div class="form-group">
+    <button class="btn btn-warning" name="istrinimas" type="submit">{% trans "Ištrinti" %}</button>
+</div>
+
+{% else %}
+{{ pardavejas |crispy}}
+
+<div class="form-group d-flex justify-content-around apac ">
+    <button class="btn btn-success col" name="pardav" type="submit">{% trans "Saugoti" %}</button>
+</div>
+{% endif %}
+</form>
+
+</div>
+{% endblock content %}

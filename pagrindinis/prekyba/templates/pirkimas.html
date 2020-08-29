@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="content-section pirkimas">
+
+<form method="POST">    {% csrf_token %}
+    <h2>{% trans "Pirkimas" %}</h2>
+    <p>{% trans "Pirkejas" %}: {{p.username}}</p>
+    <p>{% trans "Adresas" %}: {{p.profilis.adresas}}</p>
+    <p>{% trans "Tel.Numeris" %}: {{p.profilis.telefono_numeris}}</p>
+    <p>{% trans "Kaina" %}: {{k.bendra_suma}} </p>
+
+    <div class="form-group">
+        <button class="btn btn-warning" name="pirkimas" type="submit">{% trans "Pirkti" %}</button>
+        <a class="btn btn-success" href="{% url 'krepselis' user.krepselis.id %}">{% trans "Atšaukti" %}</a>
+    </div>
+</form>
+
+</div>
+{% endblock content %}

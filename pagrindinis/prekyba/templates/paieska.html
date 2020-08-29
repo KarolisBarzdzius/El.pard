@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h2>{% trans "Paieška pagal " %}"{{query}}" {% trans "rezultatai" %}:</h2>
+</br>
+{% if results %}
+<ul class="paieska">
+  {% for result in results %}
+    <li>
+      {% if result.gauti > 0 %}
+      <a href="{% url 'preke' preke_id=result.id%}">{{ result.pavadinimas }}</a>
+      <hr>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p>{% trans "Oops. Nieko neradome" %}</p>
+{% endif %}
+
+{% endblock %}

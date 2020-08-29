@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+{% load static %}
+<div class="pardavejas">
+    <h2>{{b.pavad}}</h2>
+    <p>{% trans "El.pastas" %}: {{ b.priklauso.email }}</p>
+    <p>{% trans "Telefono numeris" %}: {{ b.priklauso.profilis.telefono_numeris }}</p>
+    <p></p>
+</div>
+
+<h2>{% trans "Prekes" %}</h2>
+<hr>
+
+{% if a %}
+<section>
+    {% for preke in a %}
+    <div class="prekes">
+        {% if preke.nuotrauka %}
+        <img src="{{ preke.nuotrauka.url }}" alt="">
+        {% else %}
+        <img src="{% static 'img/no-image.png' %}">
+        {% endif %}
+        {% if preke.gauti > 0 %}
+        <h3><a  href="{% url 'preke' preke.id%}">{{ preke.pavadinimas }}</a></h3>
+        {% else %}
+        <h3>{{ preke.pavadinimas }}</h3>
+        {% endif %}
+        <h4>{% trans "Vnt.Kaina" %}: {{ preke.kaina }}</h4>
+        {% if preke.gauti > 0 %}
+        <p>{% trans "Liko" %}: {{ preke.gauti }}</p>
+        {% else %}
+        <p>{% trans "Preke Isparduota" %}</p>
+        {% endif %}
+    </div>
+
+    {% endfor %}
+    {% else %}
+      <p>{% trans "Prekiu nera" %}.</p>
+    {% endif %}
+</section>
+
+<div class="paginatorius">
+{% if prekes.has_other_pages %}
+    <ul class="pagination pagination-sm justify-content-end">
+        {% for i in prekes.paginator.page_range %}
+            {% if prekes.number == i %}
+                <li class="page-item active">
+                    <a class="page-link" href="">{{ i }}</a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endif %}
+</div>
+
+
+{% endblock %}

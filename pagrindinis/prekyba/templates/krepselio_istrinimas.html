@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+<div class="content-section istrinimas">
+    <form method="POST">    {% csrf_token %}
+        <legend class="border-bottom mb-4">{% trans "Ištrinti Uzsakymus" %}</legend>
+        <h2>{% trans "Ar istrinti uzsakymus is Krepselio?" %}</h2>
+
+        <div class="form-group">
+            <button class="btn btn-warning" name="istrinti" type="submit">{% trans "Taip, ištrinti" %}</button>
+            <a class="btn btn-secondary" href="{% url 'krepselis' user.krepselis.id %}">{% trans "Atšaukti" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

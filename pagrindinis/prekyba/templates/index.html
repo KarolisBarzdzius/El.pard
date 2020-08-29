@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<article>
+
+    <h2>{% trans "Turimos prekes" %}:</h2>
+    <div id="carouselExampleControls" class="carousel slide karusele container-fluid" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="d-block w-100 cover" src="https://i.morioh.com/6575a3b261.png" alt="First" height="400">
+            </div>
+            {% for preke in prekes %}
+                {% if preke.gauti > 0 %}
+                <div class="carousel-item">
+                    <a href="{% url 'preke' preke_id=preke.id%}"><img class="d-block w-100 cover" src="{{ preke.nuotrauka.url }}" alt="Slide" height="400"></a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">{% trans "Ankstesnis" %}</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">{% trans "Sekantis" %}</span>
+        </a>
+    </div>
+
+    <hr>
+    <h2>{% trans "Populeriausios/perkamiausios prekes" %}:</h2>
+    <hr>
+
+    <div class="d-flex perkamiausios justify-content-center">
+    {% for preke in pag %}
+    {% if preke.gauti > 0 %}
+        <div>
+            <a href="{% url 'preke' preke_id=preke.id%}"><img class="d-block cover" src="{{ preke.nuotrauka.url }}" alt="Slide" height="100"></a>
+        </div>
+    {% endif %}
+    {% endfor %}
+    </div>
+
+    <div class="pagr_paginatorius ">
+        {% if pag.has_other_pages %}
+            <ul class="pagination pagination-sm ">
+                {% for i in pag.paginator.page_range %}
+                    {% if pag.number == i %}
+                        <li class="page-item active">
+                            <a class="page-link" href="">{{ i }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <hr>
+
+    <div class="naudojimosi">
+        <h2>{% trans "Naudojimosi Info" %}</h2>
+        <br>
+        <p>{% trans "Registracija > Prisijugimas > Profilis > Tapti Pardaveju > Prekes Ikelimas"  %}</p>
+        <br>
+        <p>{% trans "Registracija > Prisijugimas > Prekes > Preke > Ideti I Krepseli > Krepselis > Pirkti/Trinti" %}</p>
+    </div>
+
+</article>
+{% endblock %}

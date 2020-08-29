@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<hr>
+<h2>{% trans "Krepselis" %}:</h2>
+
+<div class="col virs">
+    {% for message in messages %}
+    <h4 class="">{{ message }}</h4>
+    {% endfor %}
+</div>
+{% if object.vartotojo_id == user and krepselis.reikia%}
+<hr>
+
+<section class="krep">
+    {% for x in krepselis.reikia.all %}
+    <div class="rounded">
+            <p><strong>{% trans "Preke" %}:</strong> <a class="" href="{% url 'preke' preke_id=x.sandelio_id.prekes_id.id%}" >{{ x.sandelio_id.prekes_id.pavadinimas }}</a></p>
+            <p>
+                <strong>{% trans "Vnt. Kaina" %}:</strong> {{ x.sandelio_id.prekes_id.kaina }}
+                <strong>{% trans "Kiekis" %}:</strong>{{ x.perkamas_kiekis }}
+            </p>
+            <p><strong>{% trans "Kaina" %}:</strong> {{ x.uzsakymo_kaina }}</p>
+    </div>
+    {% endfor %}
+</section>
+
+<hr>
+<h4 class="zalia">{% trans "Krepselio Suma" %}: {{ krepselis.bendra_suma }}</h4>
+<hr>
+
+<div>
+    <a class="btn btn-success" href="#">{% trans "Redaguoti" %}</a>
+    <a class=" btn btn-danger" href="{% url 'krepselis_delete' user.krepselis.id%}">{% trans "Ištrinti" %}</a>
+</div>
+
+<hr>
+{% if krepselis.bendra_suma > 0 %}
+<a class="btn btn-warning w-100" href="{% url 'krepselis_pirkimas' user.krepselis.id%}">{% trans "Pirkti" %}</a>
+{% endif %}
+<hr>
+{% else %}
+<h1>{% trans "Krepselis Tuscias" %}</h1>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="atsijungimas">
+  <p>{% trans "Sėkmingai atsijungėte" %}!</p>
+  <a href="{% url 'login'%}" >{% trans "Prisijungti iš naujo" %}.</a>
+</div>
+{% endblock %}

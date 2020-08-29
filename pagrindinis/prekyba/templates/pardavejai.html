@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<ul class="pardavejai">
+    <h2>{% trans "Pardavejai" %}</h2>
+    <hr>
+    {% if pardavejas_list %}
+    {% for pardavejas in pardavejas_list %}
+    {% if pardavejas.prekiu_skaicius > 0 %}
+    <li><a href="{{ pardavejas.id }}">{{pardavejas}}</a></li>
+    <hr>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% else %}
+  <p>{% trans "Nera Pardaveju" %}</p>
+{% endif %}
+{% endblock %}

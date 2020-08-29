@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+{% load static %}
+<div class="">
+    <div class="row">
+        <div class="col prek_pavad">
+            <h2>{{preke.pavadinimas}}</h2>
+            <p>{{ preke.pardavejas_id.pardavejas }}</p>
+        </div>
+
+        <div class="col virs">
+            {% if messages %}
+            {% for message in messages %}
+            <h4 class="">{{ message }}</h4>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <hr>
+
+    {% if preke.nuotrauka %}
+      <img class="rounded w-100 nuot" src="{{ preke.nuotrauka.url }}" height="500" >
+    {% else %}
+      <img class="rounded w-100 nuot" src="{% static 'img/no-image.png'  %}" height="500">
+    {% endif %}
+
+    <hr>
+
+    <div class="row preke">
+        <div class="col apr">
+            <h2>{% trans "Aprasymas" %}</h2>
+            <p class="">{{preke.aprasymas}}</p>
+        </div>
+
+        <div class="col">
+            <form method="POST">    {% csrf_token %}
+                <ul>
+                    <h2>{% trans "Uzakymas" %}</h2>
+                    {% if preke.gauti > 0 %}
+                    {% if user.is_authenticated %}
+
+                    <li>{{ form.as_p }}</li>
+
+                    <li>{% trans "Prekes Kaina" %}: {{ preke.kaina}}</li>
+                    <br>
+                    <li>{% trans "Sandelyje liko" %}: {{ preke.gauti }}</li>
+                    <br>
+<!--                    <li>Uzs.Kaina: reikia padaryti kazkaip :D {{kaina}}</li>-->
+                    <br>
+                    <li>
+                        <button class="btn btn-info" name="uzsakymas" type="submit">{% trans "I krepseli" %}</button>
+                    </li>
+
+                    {% else %}
+                    <p>{% trans "Reikia prisijungti norint uzsisakyti preke" %}</p>
+                    {% endif %}
+
+                    {% else %}
+                    <p>{% trans "Preke Isparduota" %}</p>
+                    {% endif %}
+                </ul>
+            </form>
+        </div>
+    </div>
+
+        <hr>
+    <h2>{% trans "Atsiliepimai" %}</h2>
+        <br>
+
+    <div class="atsiliepimas">
+        {% if atsi %}
+        {% for x in atsi %}
+
+        <ul class="list-unstyled">
+            <li class="media atsi">
+                    {% if x.nuotrauka.url %}
+                <img class='mr-3 img-thumbnail' src="{{ x.nuotrauka.url }}">
+                    {% else %}
+                <img class="mr-3 img-thumbnail" src="{% static 'img/no-image.png'  %}">
+                    {% endif %}
+
+                 <div class="media-body">
+                     <h3 class="mt-0"><strong>{{x.vartotojas}}</strong></h3>
+                    <p class="">{{x.sukurta | date:'y/m/d H:m'}}</p>
+                     <h4>{% trans "Atsiliepimas" %}:</h4>
+                    <p class=" mb-3">{{x.atsiliepimas}}</p>
+                </div>
+            </li>
+        </ul>
+        {% endfor %}
+        {% else %}
+        <p>{% trans "Atsiliepimu Nera" %}</p>
+        {% endif %}
+
+        <article>
+            {% if user.is_authenticated %}
+            <form method="POST">
+                {% csrf_token %}
+                <h2>{% trans "Palikti Atsiliepima" %}:</h2>
+
+            {{atsi_form}}
+
+            <button class="btn btn-info" name="pranesimas" type="submit">{% trans "Siusti" %}</button>
+            </form>
+
+            {% else %}
+            <p>{% trans "Norint palikti atsiliepima reikia prisijungti" %}</p>
+            {% endif %}
+        </article>
+    </div>
+    <hr>
+</div>
+{% endblock %}

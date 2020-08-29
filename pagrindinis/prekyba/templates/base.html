@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% block title %}<title>Puslapis</title>{% endblock %}
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/styles.css?{% now "U" %}"/>
+  </head>
+  {% load static %}
+  {% load i18n %}
+  <body class="" >
+
+  <video autoplay muted loop id="myVideo">
+    <source src="../../media/background/abst.mp4" type="video/mp4">
+  </video>
+
+
+    <header class="navbar-light pagrindinis_virsus d-flex justify-content-around align-items-center">
+
+      <div id="mySidenav" class="sidenav meniu">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <ul class="">
+              <li class="">
+                <a class=" btn btn-outline-success" href="{% url 'index' %}">{% trans "Pagrindinis" %}</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class=""><a class=" btn btn-outline-success" href="{% url 'krepselis' user.krepselis.id%}">{% trans "Krepselis" %}</a></li>
+              {% endif %}
+              <li class=" "><a class=" btn btn-outline-success" href="{% url 'prekes' %}">{% trans "Prekes" %}</a></li>
+              <li class=""><a class=" btn btn-outline-success" href="{% url 'pardavejai' %}">{% trans "Pardavejai" %}</a></li>
+              <li class=" "><a class="btn btn-outline-success" href="{% url 'kontaktai' %}">{% trans "Kontaktai" %}</a></li>
+              {% if user.is_authenticated %}
+              <li class=" "><a class="btn btn-outline-success" href="{% url 'profilis' %}">{% trans "Profilis" %}</a></li>
+              <li class=""><a class=" btn btn-outline-success" href="{% url 'logout'%}">{% trans "Atsijungti" %}</a></li>
+              {% else %}
+              <li class=" "><a class=" btn btn-outline-success" href="{% url 'login'%}">{% trans "Prisijungti" %}</a></li>
+              {% endif %}
+              {% if not user.is_authenticated %}
+              <li class=""><a class=" btn btn-outline-success" href="{% url 'register'%}">{% trans "Registruotis" %}</a></li>
+               {% endif %}
+            </ul>
+      </div>
+
+      <div class="d-flex">
+        <a class="navbar-brand" href="{% url 'code' %}"><img class="rounded-circle" src="https://i.morioh.com/6575a3b261.png" alt="" width="50" height="50"></a>
+        <a href="{% url 'index' %}"><h1>For Fun</h1></a>
+      </div>
+
+      <form action="{% url 'paieska' %}" method="get" class="form-inline">
+        <input name="query" class="form-control mr-sm-2" type="search" placeholder="{% trans "Paieška" %}">
+        <button class="btn btn-success my-2 my-sm-0" type="submit">{% trans "Ieskoti" %}</button>
+      </form>
+
+      <form action="{% url 'set_language' %}" method="post" class="language_form">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}"/>
+        <select name="language">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as LANGUAGES %}
+          {% for lang in LANGUAGES %}
+          <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected" {% endif %}>
+            <span>{{ lang.0 }}</span>
+          </option>
+          {% endfor %}
+        </select>
+        <button class="btn btn-success" type="submit">{% trans "Pakeisti" %}</button>
+      </form>
+
+      <button onclick="openNav()" class="navbar-toggler btn-success a" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+    </header>
+
+    <main id="main">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="pagrindinio_apac">
+      <div class="">
+            <ul class="d-flex justify-content-between">
+              <li class="">
+                <a class=" btn btn-success" href="{% url 'index' %}">{% trans "Pagrindinis" %}</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="">
+                <a class=" btn btn-success" href="{% url 'krepselis' user.krepselis.id%}">{% trans "Krepselis" %}</a>
+              </li>
+              {% endif %}
+              <li class=" ">
+                <a class=" btn btn-success" href="{% url 'prekes' %}">{% trans "Prekes" %}</a>
+              </li>
+              <li class="">
+                <a class=" btn btn-success" href="{% url 'pardavejai' %}">{% trans "Pardavejai" %}</a>
+              </li>
+              <li class=" ">
+                <a class="btn btn-success" href="{% url 'kontaktai' %}">{% trans "Kontaktai" %}</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class=" ">
+                <a class="btn btn-success" href="{% url 'profilis' %}">{% trans "Profilis" %}</a>
+              </li>
+              <li class="">
+                <a class=" btn btn-success" href="{% url 'logout'%}">{% trans "Atsijungti" %}</a>
+              </li>
+              {% else %}
+              <li class=" ">
+                <a class=" btn btn-success" href="{% url 'login'%}">{% trans "Prisijungti" %}</a>
+              </li>
+              {% endif %}
+              {% if not user.is_authenticated %}
+              <li class="">
+                <a class=" btn btn-success" href="{% url 'register'%}">{% trans "Registruotis" %}</a>
+              </li>
+               {% endif %}
+            </ul>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script>
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "300px";
+    }
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+    </script>
+
+    <script>
+      $("form input[name='perkamas_kiekis']").keyup(myFunction() {
+        var x = document.getElementById("id_perkamas_kiekis");
+        x.value = 999
+        });
+    </script>
+
+  </body>
+</html>
+
+
+  </body>
+</html>

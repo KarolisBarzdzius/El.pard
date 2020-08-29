@@ -1,0 +1,442 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-30 11:54+0300\n"
+"PO-Revision-Date: 2020-06-30 11:54+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3.1\n"
+
+#: .\prekyba\models.py:11 .\prekyba\templates\code.html:618
+#: .\prekyba\templates\code.html:623
+#: .\prekyba\templates\pardavejo_sukurimas.html:8
+#: .\prekyba\templates\prekes.html:41 .\prekyba\templates\prekes.html:46
+msgid "Pardavejas"
+msgstr "Seller"
+
+#: .\prekyba\models.py:25
+msgid "Pavadinimas"
+msgstr "Name"
+
+#: .\prekyba\models.py:26 .\prekyba\templates\code.html:666
+#: .\prekyba\templates\preke.html:33
+msgid "Aprasymas"
+msgstr "Description"
+
+#: .\prekyba\models.py:27
+msgid "Nuotrauka"
+msgstr "Photo"
+
+#: .\prekyba\models.py:29
+msgid "Vieneto kaina"
+msgstr "Price"
+
+#: .\prekyba\models.py:52 .\prekyba\templates\kreps_upd.html:11
+#: .\prekyba\templates\krepselio_redagavimas.html:11
+#: .\prekyba\templates\krepselis.html:18
+#: .\prekyba\templates\vartotojo_uzsakymai.html:15
+msgid "Preke"
+msgstr "Product"
+
+#: .\prekyba\models.py:53
+msgid "Prideti"
+msgstr "Add"
+
+#: .\prekyba\models.py:70
+msgid "Perkamas kiekis"
+msgstr "Quantity"
+
+#: .\prekyba\models.py:121 .\prekyba\templates\kontaktai.html:12
+#: .\prekyba\templates\pirkimas.html:9
+msgid "Adresas"
+msgstr "Address"
+
+#: .\prekyba\models.py:122 .\prekyba\templates\pardavejas.html:8
+msgid "Telefono numeris"
+msgstr "Phone number"
+
+#: .\prekyba\templates\base.html:24 .\prekyba\templates\base.html:84
+msgid "Pagrindinis"
+msgstr "Main"
+
+#: .\prekyba\templates\base.html:27 .\prekyba\templates\base.html:88
+#: .\prekyba\templates\kreps_upd.html:5
+#: .\prekyba\templates\krepselio_redagavimas.html:5
+#: .\prekyba\templates\krepselis.html:5
+msgid "Krepselis"
+msgstr "Cart"
+
+#: .\prekyba\templates\base.html:29 .\prekyba\templates\base.html:92
+#: .\prekyba\templates\pardavejas.html:12 .\prekyba\templates\prekes.html:5
+msgid "Prekes"
+msgstr "Goods"
+
+#: .\prekyba\templates\base.html:30 .\prekyba\templates\base.html:95
+#: .\prekyba\templates\pardavejai.html:5
+msgid "Pardavejai"
+msgstr "Sellers"
+
+#: .\prekyba\templates\base.html:31 .\prekyba\templates\base.html:98
+#: .\prekyba\templates\kontaktai.html:6
+msgid "Kontaktai"
+msgstr "Contacts"
+
+#: .\prekyba\templates\base.html:33 .\prekyba\templates\base.html:102
+#: .\prekyba\templates\profilis.html:6
+msgid "Profilis"
+msgstr "Profile"
+
+#: .\prekyba\templates\base.html:34 .\prekyba\templates\base.html:105
+msgid "Atsijungti"
+msgstr "Log Out"
+
+#: .\prekyba\templates\base.html:36 .\prekyba\templates\base.html:109
+#: .\prekyba\templates\registration\login.html:23
+msgid "Prisijungti"
+msgstr "Log in"
+
+#: .\prekyba\templates\base.html:39 .\prekyba\templates\base.html:114
+#: .\prekyba\templates\register.html:38
+msgid "Registruotis"
+msgstr "Register"
+
+#: .\prekyba\templates\base.html:50
+msgid "Paieška"
+msgstr "Search"
+
+#: .\prekyba\templates\base.html:51
+msgid "Ieskoti"
+msgstr "Search"
+
+#: .\prekyba\templates\base.html:66
+msgid "Pakeisti"
+msgstr "Change"
+
+#: .\prekyba\templates\code.html:615 .\prekyba\templates\code.html:621
+#: .\prekyba\templates\pardavejas.html:29 .\prekyba\templates\prekes.html:38
+#: .\prekyba\templates\prekes.html:44
+msgid "Vnt.Kaina"
+msgstr "Price"
+
+#: .\prekyba\templates\code.html:616 .\prekyba\templates\pardavejas.html:31
+#: .\prekyba\templates\prekes.html:39
+msgid "Liko"
+msgstr "Left"
+
+#: .\prekyba\templates\code.html:617 .\prekyba\templates\code.html:703
+#: .\prekyba\templates\preke.html:69 .\prekyba\templates\prekes.html:40
+msgid "Atsiliepimai"
+msgstr "Feedback"
+
+#: .\prekyba\templates\code.html:622 .\prekyba\templates\prekes.html:45
+msgid "Preke isparduota"
+msgstr "Product Sold"
+
+#: .\prekyba\templates\code.html:630 .\prekyba\templates\pardavejas.html:39
+#: .\prekyba\templates\prekes.html:53
+msgid "Prekiu nera"
+msgstr "There are no Goods"
+
+#: .\prekyba\templates\code.html:673 .\prekyba\templates\preke.html:40
+msgid "Uzakymas"
+msgstr "Order"
+
+#: .\prekyba\templates\code.html:679 .\prekyba\templates\preke.html:46
+msgid "Prekes Kaina"
+msgstr "Product Price"
+
+#: .\prekyba\templates\code.html:681 .\prekyba\templates\preke.html:48
+msgid "Sandelyje liko"
+msgstr "In warehouse"
+
+#: .\prekyba\templates\code.html:685 .\prekyba\templates\preke.html:53
+msgid "I krepseli"
+msgstr "To Cart"
+
+#: .\prekyba\templates\code.html:688 .\prekyba\templates\preke.html:57
+msgid "Reikia prisijungti norint uzsisakyti preke"
+msgstr "Need to by logged in to order"
+
+#: .\prekyba\templates\code.html:692 .\prekyba\templates\pardavejas.html:33
+#: .\prekyba\templates\preke.html:61
+msgid "Preke Isparduota"
+msgstr "Product Sold"
+
+#: .\prekyba\templates\code.html:720 .\prekyba\templates\preke.html:87
+msgid "Atsiliepimas"
+msgstr "Feedback"
+
+#: .\prekyba\templates\code.html:727 .\prekyba\templates\preke.html:94
+msgid "Atsiliepimu Nera"
+msgstr "No feedbacks"
+
+#: .\prekyba\templates\code.html:735 .\prekyba\templates\preke.html:101
+msgid "Palikti Atsiliepima"
+msgstr "Leave feedback"
+
+#: .\prekyba\templates\code.html:739 .\prekyba\templates\preke.html:105
+msgid "Siusti"
+msgstr "Send"
+
+#: .\prekyba\templates\code.html:743 .\prekyba\templates\preke.html:109
+msgid "Norint palikti atsiliepima reikia prisijungti"
+msgstr "In order to leave feedback you need to be logged in"
+
+#: .\prekyba\templates\code.html:773
+#: .\prekyba\templates\prekes_ikelimas.html:21
+msgid "Prekes Ikelimas"
+msgstr "Add Product"
+
+#: .\prekyba\templates\code.html:779
+#: .\prekyba\templates\prekes_ikelimas.html:28
+msgid "Pateikti"
+msgstr "Submit"
+
+#: .\prekyba\templates\code.html:782
+#: .\prekyba\templates\prekes_ikelimas.html:32
+msgid "Prekes Kiekis"
+msgstr "Product quantity"
+
+#: .\prekyba\templates\code.html:788 .\prekyba\templates\kreps_upd.html:24
+#: .\prekyba\templates\pardavejo_sukurimas.html:23
+#: .\prekyba\templates\prekes_ikelimas.html:39
+msgid "Saugoti"
+msgstr "Save"
+
+#: .\prekyba\templates\index.html:6
+msgid "Turimos prekes"
+msgstr "Available goods"
+
+#: .\prekyba\templates\index.html:22
+msgid "Ankstesnis"
+msgstr "Previous"
+
+#: .\prekyba\templates\index.html:26
+msgid "Sekantis"
+msgstr "Next"
+
+#: .\prekyba\templates\index.html:31
+msgid "Populeriausios/perkamiausios prekes"
+msgstr "The most popular / best-selling goods"
+
+#: .\prekyba\templates\index.html:65
+msgid "Naudojimosi Info"
+msgstr "Guide"
+
+#: .\prekyba\templates\index.html:67
+msgid ""
+"Registracija > Prisijugimas > Profilis > Tapti Pardaveju > Prekes Ikelimas"
+msgstr "Register > Log In > Profile > Become Seller >Add Product"
+
+#: .\prekyba\templates\index.html:69
+msgid ""
+"Registracija > Prisijugimas > Prekes > Preke > Ideti I Krepseli > Krepselis "
+"> Pirkti/Trinti"
+msgstr ""
+"Register > Log In > Goods > Product > Add to Cart > Cart >Purchase/Delete"
+
+#: .\prekyba\templates\kontaktai.html:8
+msgid "Elektroninis pastas"
+msgstr "E-mail"
+
+#: .\prekyba\templates\kontaktai.html:10
+msgid "Telefonas"
+msgstr "Phone Number"
+
+#: .\prekyba\templates\kontaktai.html:14
+msgid "Konsultacijos Telefonu"
+msgstr "Consultations by"
+
+#: .\prekyba\templates\kreps_upd.html:13
+#: .\prekyba\templates\krepselio_redagavimas.html:13
+#: .\prekyba\templates\krepselis.html:20
+#: .\prekyba\templates\vartotojo_uzsakymai.html:18
+msgid "Vnt. Kaina"
+msgstr "Price"
+
+#: .\prekyba\templates\kreps_upd.html:14
+#: .\prekyba\templates\krepselio_redagavimas.html:14
+#: .\prekyba\templates\krepselis.html:21
+#: .\prekyba\templates\vartotojo_uzsakymai.html:17
+msgid "Kiekis"
+msgstr "Quantity"
+
+#: .\prekyba\templates\kreps_upd.html:16
+#: .\prekyba\templates\krepselio_redagavimas.html:16
+#: .\prekyba\templates\krepselis.html:23 .\prekyba\templates\pirkimas.html:11
+#: .\prekyba\templates\vartotojo_uzsakymai.html:20
+msgid "Kaina"
+msgstr "Price"
+
+#: .\prekyba\templates\kreps_upd.html:18 .\prekyba\templates\krepselis.html:34
+#: .\prekyba\templates\pardavejo_sukurimas.html:16
+#: .\prekyba\templates\vartotojo_uzsakymai.html:29
+msgid "Ištrinti"
+msgstr "Delete"
+
+#: .\prekyba\templates\kreps_upd.html:25
+#: .\prekyba\templates\krepselio_redagavimas.html:21
+#: .\prekyba\templates\krepselis.html:29
+msgid "Krepselio Suma"
+msgstr "Total"
+
+#: .\prekyba\templates\krepselio_istrinimas.html:7
+msgid "Ištrinti Uzsakymus"
+msgstr "Delete Order"
+
+#: .\prekyba\templates\krepselio_istrinimas.html:8
+msgid "Ar istrinti uzsakymus is Krepselio?"
+msgstr "Delete orders from cart?"
+
+#: .\prekyba\templates\krepselio_istrinimas.html:11
+msgid "Taip, ištrinti"
+msgstr "Yes"
+
+#: .\prekyba\templates\krepselio_istrinimas.html:12
+#: .\prekyba\templates\pirkimas.html:15
+msgid "Atšaukti"
+msgstr "Cancel"
+
+#: .\prekyba\templates\krepselio_redagavimas.html:24
+msgid "Išsaugoti"
+msgstr "Save"
+
+#: .\prekyba\templates\krepselis.html:33
+#: .\prekyba\templates\vartotojo_uzsakymai.html:28
+msgid "Redaguoti"
+msgstr "Edit"
+
+#: .\prekyba\templates\krepselis.html:39 .\prekyba\templates\pirkimas.html:14
+msgid "Pirkti"
+msgstr "Purchase"
+
+#: .\prekyba\templates\krepselis.html:43
+#: .\prekyba\templates\vartotojo_uzsakymai.html:33
+msgid "Krepselis Tuscias"
+msgstr "Cart is empty"
+
+#: .\prekyba\templates\paieska.html:4
+msgid "Paieška pagal "
+msgstr "Search by "
+
+#: .\prekyba\templates\paieska.html:4
+msgid "rezultatai"
+msgstr "rezults"
+
+#: .\prekyba\templates\paieska.html:18
+msgid "Oops. Nieko neradome"
+msgstr "Oops... Nothing was found"
+
+#: .\prekyba\templates\pardavejai.html:16
+msgid "Nera Pardaveju"
+msgstr "There are no Sellers"
+
+#: .\prekyba\templates\pardavejas.html:7
+msgid "El.pastas"
+msgstr "E-mail"
+
+#: .\prekyba\templates\pirkimas.html:7
+msgid "Pirkimas"
+msgstr "Purchase"
+
+#: .\prekyba\templates\pirkimas.html:8
+msgid "Pirkejas"
+msgstr "Purchaser"
+
+#: .\prekyba\templates\pirkimas.html:10
+msgid "Tel.Numeris"
+msgstr "Phone Number"
+
+#: .\prekyba\templates\profilis.html:32
+msgid "Krepselis//Suma"
+msgstr "Cart//Price"
+
+#: .\prekyba\templates\profilis.html:44
+msgid "Atnaujinti"
+msgstr "Update"
+
+#: .\prekyba\templates\profilis.html:46
+msgid "Ikelti Preke Pardavimui"
+msgstr "Add Product"
+
+#: .\prekyba\templates\profilis.html:47
+msgid "Istrinti Pardaveja"
+msgstr "Delete Seller"
+
+#: .\prekyba\templates\profilis.html:49
+msgid "Tapti Pardaveju"
+msgstr "Become Seller"
+
+#: .\prekyba\templates\profilis.html:51
+msgid "Norint tapti pardaveju reikalingas uzpildytas profilis"
+msgstr "Need filled profile in order to become seller"
+
+#: .\prekyba\templates\register.html:5
+msgid "Registracija"
+msgstr "Registration"
+
+#: .\prekyba\templates\register.html:16
+msgid "Vartotojo vardas"
+msgstr "User Name"
+
+#: .\prekyba\templates\register.html:22
+msgid "El. paštas"
+msgstr "E-mail"
+
+#: .\prekyba\templates\register.html:28
+#: .\prekyba\templates\registration\login.html:18
+msgid "Slaptažodis"
+msgstr "Password"
+
+#: .\prekyba\templates\register.html:34
+msgid "Pakartoti slaptažodį"
+msgstr "Repeat password"
+
+#: .\prekyba\templates\register.html:40
+msgid "Jeigu užsiregistravote anksčiau"
+msgstr "If already registered"
+
+#: .\prekyba\templates\register.html:40
+msgid "prisijunkite"
+msgstr "log in"
+
+#: .\prekyba\templates\registration\logged_out.html:5
+msgid "Sėkmingai atsijungėte"
+msgstr "Successfully loged out"
+
+#: .\prekyba\templates\registration\logged_out.html:6
+msgid "Prisijungti iš naujo"
+msgstr "Log in again"
+
+#: .\prekyba\templates\registration\login.html:6
+msgid "Prisijungimo klaida, bandykite dar kartą"
+msgstr "Log in error. Try again"
+
+#: .\prekyba\templates\registration\login.html:14
+msgid "Vartotojas"
+msgstr "User"
+
+#: .\prekyba\templates\vartotojo_uzsakymai.html:11
+msgid "Uzsakymai"
+msgstr "Order"
+
+#: .\prekyba\templates\vartotojo_uzsakymai.html:24
+msgid "Is viso"
+msgstr "Total"
+
+#~ msgid ""
+#~ "Neturite prieigos prie šio password_reset_email.html turite prisijungti"
+#~ msgstr "Dont have access to pass reset"
+
+#~ msgid "Pardavejo Pavadinimas"
+#~ msgstr "Seller"

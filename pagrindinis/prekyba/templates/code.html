@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CODE</title>
+<link rel="stylesheet" href="/static/css/styles.css?{% now "U" %}"/>
+</head>
+
+{% load static %}
+<body>
+
+    <div class="code-virsus">
+
+    </div>
+
+    <div class="code">
+        <div id="editor">
+
+            ---------------------MODELS------------------------
+            from django.db import models
+from django.contrib.auth.models import User
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from django.utils.translation import gettext as _
+
+class Pardavejas(models.Model):
+    priklauso=models.OneToOneField(User,on_delete=models.SET_NULL,null=True)
+    pavad=models.CharField(_('Pardavejas'),max_length=30,null=True)
+
+    @property
+    def prekiu_skaicius(self):
+        a=Preke.objects.filter(pardavejas_id=self.id)
+        b=0
+        for x in a:
+            b+=1
+        return b
+
+    def __str__(self):
+        return f"Pardavejas: {self.pavad} // Parduodamos prekes: {self.prekiu_skaicius} // {self.priklauso}"
+
+class Preke(models.Model):
+    pavadinimas=models.CharField(_('Pavadinimas'),max_length=30)
+    aprasymas=models.TextField(_('Aprasymas'),max_length=600,null=True,blank=True)
+    nuotrauka=models.ImageField(_('Nuotrauka'),default="default.png",upload_to='prekes_nuotraukos')
+    pardavejas_id=models.ForeignKey(Pardavejas,on_delete=models.CASCADE,null=True)
+    kaina=models.FloatField(_('Vieneto kaina'),default=0)
+
+    @property
+    def atsil_sk(self):
+        at=Atsiliepimai.objects.filter(prekes_id=self.id)
+        sk=0
+        for s in at:
+            sk+=1
+        return sk
+
+    @property
+    def gauti(self):
+        a=Sandelys.objects.filter(prekes_id=self.id)
+        b=0
+        for x in a:
+            b=x.liko
+        return b
+
+    def __str__(self):
+        return f"{self.pavadinimas} vnt.kaina: {self.kaina} // Pardavejas: {self.pardavejas_id.pavad} //liko: {self.gauti}"
+
+
+class Sandelys(models.Model):
+    prekes_id=models.OneToOneField(Preke,on_delete=models.CASCADE,null=True, verbose_name=_('Preke'))
+    pridetas_kiekis=models.IntegerField(_('Prideti'),null=True)
+
+    @property
+    def liko(self):
+        nupirkta=Uzsakymas.objects.filter(sandelio_id=self.id)
+        yra = self.pridetas_kiekis
+        for x in nupirkta:
+            yra-= x.perkamas_kiekis
+        return yra
+
+
+    def __str__(self):
+        return f"{self.prekes_id} // prideta: {self.pridetas_kiekis} // liko: {self.liko}//"
+
+
+class Uzsakymas(models.Model):
+    sandelio_id=models.ForeignKey(Sandelys,on_delete=models.SET_NULL,null=True)
+    perkamas_kiekis=models.IntegerField(_('Perkamas kiekis'),null=True)
+    krepselio_id=models.ForeignKey('Krepselis',on_delete=models.SET_NULL,null=True,)
+
+    @property
+    def vartotojas(self):
+        vart=Krepselis.objects.filter(uzsakymas=self.id)
+        for x in vart:
+            vartot=x.vartotojo_id
+        return vartot
+
+    @property
+    def uzsakymo_kaina(self):
+        uzsakymo= Sandelys.objects.filter(uzsakymas=self.id)
+        suma=0
+        for x in uzsakymo:
+            suma = self.perkamas_kiekis * x.prekes_id.kaina
+        return suma
+
+    def __str__(self):
+        return f"{self.sandelio_id} perkama: {self.perkamas_kiekis} kaina: {self.uzsakymo_kaina} // uzsakovas: {self.vartotojas} "
+
+
+class Krepselis(models.Model):
+    vartotojo_id=models.OneToOneField(User,on_delete=models.SET_NULL,null=True)
+
+
+    @receiver(post_save,sender=User)
+    def prideti(sender,instance,created,**kwargs):
+        if created:
+            Krepselis.objects.create(vartotojo_id=instance)
+
+    @property
+    def reikia(self):
+        return Uzsakymas.objects.filter(krepselio_id=self.id)
+
+
+    @property
+    def bendra_suma(self):
+        uzsakymai = Uzsakymas.objects.filter(krepselio_id=self.id)
+        total = 0
+        for line in uzsakymai:
+            total += line.uzsakymo_kaina
+        return total
+
+    def __str__(self):
+        return f"{self.vartotojo_id} krepselis / bendra suma: {self.bendra_suma}"
+
+
+class Profilis(models.Model):
+    vartotojas= models.OneToOneField(User,on_delete=models.SET_NULL,null=True)
+    nuotrauka=models.ImageField(default="default.png",upload_to="profilio_nuotraukos")
+    adresas = models.CharField(_('Adresas'),max_length=150,null=True, blank=True)
+    telefono_numeris = models.IntegerField(_('Telefono numeris'), null=True, blank=True)
+
+    @receiver(post_save, sender=User)
+    def prideti(sender, instance, created, **kwargs):
+        if created:
+            Profilis.objects.create(vartotojas=instance)
+
+    def __str__(self):
+        return f"{self.vartotojas.username} profilis"
+
+
+class Atsiliepimai(models.Model):
+    prekes_id=models.ForeignKey(Preke,on_delete=models.SET_NULL,null=True,blank=True)
+    vartotojas=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
+    sukurta=models.DateTimeField(auto_now=True)
+    atsiliepimas=models.TextField('',max_length=1234)
+
+
+    @property
+    def nuotrauka(self):
+        ntr=self.vartotojas.profilis.nuotrauka
+        return ntr
+
+    def __str__(self):
+        return f"Kas parase: {self.vartotojas}/Kada: {self.sukurta}/Atsiliepimas: {self.atsiliepimas} // preke: {self.prekes_id}"
+
+            -------------------VIEWS-----------------------
+
+            from django.shortcuts import render
+from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.forms import User
+from django.contrib import messages
+
+from django.core.paginator import Paginator
+
+from django.shortcuts import render, get_object_or_404
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.views.generic import ListView,DetailView
+
+from .models import Preke,Krepselis,Sandelys,Pardavejas,Atsiliepimai,Uzsakymas
+from .forms import  (
+    UzsakymasForm,UserForm,ProfilioForm,
+    AtsiliepimuForm,SandelysForm,PrekesIkelimasForm,
+    PardavejoForm
+)
+from django.db.models import Q
+
+from django.http import HttpResponseRedirect
+
+
+
+def code(request):
+    return render(request,'code.html')
+
+def index(request):
+    prekes=Preke.objects.all()
+
+    paginator = Paginator(Preke.objects.all(), 7)
+    page_number = request.GET.get('page')
+    paged_preke = paginator.get_page(page_number)
+
+    return render(request, 'index.html',context={'prekes':prekes, 'pag':paged_preke})
+
+
+def prekes(request):
+    paginator = Paginator(Preke.objects.all(), 15)
+    page_number = request.GET.get('page')
+    paged_preke = paginator.get_page(page_number)
+
+    context={
+        'prekes':paged_preke,
+
+    }
+
+    return render(request, 'prekes.html', context=context)
+
+
+def preke(request, preke_id):
+    preke= get_object_or_404(Preke, pk=preke_id)
+    atsiliepimas=Atsiliepimai.objects.filter(prekes_id=preke_id).order_by('-sukurta')
+
+    atsiliepimo_form=AtsiliepimuForm()
+    uzsakymas_form = UzsakymasForm()
+
+    smth = 1 * preke.kaina
+
+    if request.user.is_authenticated:
+        data = {
+            'perkamas_kiekis':1,
+            'sandelio_id': Sandelys.objects.get(prekes_id=preke_id),
+            'krepselio_id': Krepselis.objects.get(vartotojo_id=request.user),
+        }
+        atsiliep={
+            'atsiliepimas':"Super Preke :)",
+            'vartotojas': request.user,
+            'prekes_id': get_object_or_404(Preke,id=preke_id),
+        }
+
+        uzsakymas_form = UzsakymasForm(data)
+        atsiliepimo_form = AtsiliepimuForm(atsiliep)
+
+        if request.method == "POST":
+            if 'uzsakymas' in request.POST:
+                uzsakymas_form = UzsakymasForm(request.POST)
+                if uzsakymas_form.is_valid():
+                    uzsakymas_form.save()
+                    messages.success(request, 'Uzsakymas idetas i krepseli')
+                    uzsakymas_form
+
+            elif 'pranesimas' in request.POST:
+                atsiliepimo_form = AtsiliepimuForm(request.POST)
+                if atsiliepimo_form.is_valid():
+                    atsiliepimo_form.save()
+                    atsiliepimo_form
+
+    context = {
+        'form': uzsakymas_form,
+        'preke':preke,
+        'kaina':smth,
+        'atsi':atsiliepimas,
+        'atsi_form':atsiliepimo_form,
+    }
+    return render(request, 'preke.html', context=context)
+
+
+class KrepselisDetailView(LoginRequiredMixin,DetailView):
+    model = Krepselis
+    template_name = 'krepselis.html'
+    pk_url_kwarg = 'id'
+
+
+def KrepsDelete(request,id):
+    a = Krepselis.objects.filter(vartotojo_id=request.user)
+    uzsak = Uzsakymas.objects.filter(krepselio_id=request.user.krepselis.id)
+
+    if request.method == 'POST':
+        uzsak.delete()
+        messages.success(request,'Uzsakymai Istrinti')
+        return HttpResponseRedirect(f"/svetaine/krepselis/{id}")
+
+    context={
+        'a':a,
+        'b':uzsak,
+    }
+
+    return render(request,'krepselio_istrinimas.html',context)
+
+
+class PardavejasListView(ListView):
+    model = Pardavejas
+    template_name = 'pardavejai.html'
+
+
+def Pardavejo_prekes(request, pardavejas_id):
+    pardavejas=get_object_or_404(Pardavejas,id=pardavejas_id)
+
+    paginator = Paginator(Preke.objects.filter(pardavejas_id=pardavejas_id), 10)
+    page_number = request.GET.get('page')
+    paged_preke = paginator.get_page(page_number)
+
+    context = {
+        'b':pardavejas,
+        'a':paged_preke,
+    }
+    return render(request, 'pardavejas.html', context=context)
+
+
+def kontaktai(request):
+    return render(request,'kontaktai.html')
+
+
+def paieska(request):
+    query = request.GET.get('query')
+    search_results = Preke.objects.filter(Q(pavadinimas__icontains=query) | Q(aprasymas__icontains=query))
+    return render(request, 'paieska.html', {'results': search_results, 'query': query})
+
+
+def pardavejas_kurimas(request):
+    pard = {
+        'pavad': f"{request.user.username}",
+        'priklauso': request.user,
+    }
+    pard_form = PardavejoForm(pard)
+
+    if request.user.is_authenticated:
+
+
+        if request.method == "POST":
+            if 'pardav' in request.POST:
+                pard_form = PardavejoForm(request.POST)
+                if pard_form.is_valid():
+                    pard_form.save()
+                    messages.success(request, 'Sukurtas Pardavejas')
+                    return redirect('profilis')
+
+            if 'istrinimas' in request.POST:
+                pavadinimas = get_object_or_404(Pardavejas, id=request.user.pardavejas.id)
+                pavadinimas.delete()
+                messages.success(request, 'Pardavejas istrintas')
+                return redirect('profilis')
+
+    context = {
+        'pardavejas': pard_form,
+    }
+
+    return render(request, 'pardavejo_sukurimas.html', context)
+
+
+def ikelimas(request):
+        if request.user.pardavejas.id :
+            prek = {
+                'pardavejas_id': request.user.pardavejas.id,
+                'kaina':1,
+            }
+            sand = {
+                'pridetas_kiekis': 1,
+            }
+
+            prek_form = PrekesIkelimasForm(prek)
+            sand_form = SandelysForm(request,sand)
+
+            if 'prek' in request.POST:
+                prek_form = PrekesIkelimasForm(request.POST,request.FILES)
+                if prek_form.is_valid():
+                    prek_form.save()
+                    messages.info(request, 'Preke Ikelta')
+                    return redirect('ikelimas')
+
+            if 'sand' in request.POST:
+                sand_form = SandelysForm(request,request.POST)
+                if sand_form.is_valid():
+                    sand_form.save()
+                    messages.info(request, 'Pridetas Kiekis')
+                    return redirect('ikelimas')
+
+        context={
+            'preke':prek_form,
+            'sandelys':sand_form,
+        }
+        return render(request,'prekes_ikelimas.html',context)
+
+
+def pirkimas(request,id):
+    kaina=get_object_or_404(Krepselis, id=request.user.krepselis.id)
+    pirkejas=request.user
+    uzsak = Uzsakymas.objects.filter(krepselio_id=request.user.krepselis.id)
+
+
+    if request.method == "POST":
+        if 'pirkimas' in request.POST:
+            uzsak.delete()
+            messages.success(request,
+             'Sekmingai Nusipirkote Prekes... '
+             'Kazkokiu stebuklingu butu bus nuskaiciuoti pinigai ;D..'
+             'Prekes gali buti nepristatytos ')
+            return HttpResponseRedirect(f"/svetaine/krepselis/{id}")
+
+    context={
+        'p':pirkejas,
+        'k':kaina,
+    }
+
+    return render(request,'pirkimas.html',context)
+
+
+@login_required
+def profilis(request):
+    if request.method == "POST":
+        user_form = UserForm(request.POST, instance=request.user)
+        profilio_form = ProfilioForm(request.POST, request.FILES, instance=request.user.profilis)
+        if user_form.is_valid() and profilio_form.is_valid():
+            user_form.save()
+            profilio_form.save()
+            messages.success(request, f"Profilis atnaujintas")
+            return redirect('profilis')
+    else:
+        user_form = UserForm(instance=request.user)
+        profilio_form = ProfilioForm(instance=request.user.profilis)
+
+    context = {
+        'u_form': user_form,
+        'p_form': profilio_form,
+    }
+    return render(request, 'profilis.html', context)
+
+
+@csrf_protect
+def register(request):
+    if request.method == "POST":
+
+        if 'registruotis' in request.POST:
+            username = request.POST['username']
+            email = request.POST['email']
+            password = request.POST['password']
+            password2 = request.POST['password2']
+
+            if password == password2:
+
+                if User.objects.filter(username=username).exists():
+                    messages.error(request, f'Vartotojo vardas {username} užimtas!')
+                    return redirect('register')
+                else:
+
+                    if User.objects.filter(email=email).exists():
+                        messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+                        return redirect('register')
+                    else:
+
+                        User.objects.create_user(username=username, email=email, password=password)
+            else:
+                messages.error(request, 'Slaptažodžiai nesutampa!')
+                return redirect('register')
+            return redirect('login')
+
+    return render(request, 'register.html')
+
+            ------------------FORMS-------------------
+
+            from django import forms
+
+from .models import Uzsakymas,Profilis,Atsiliepimai,Preke,Sandelys,Pardavejas
+
+from django.contrib.auth.models import User
+
+
+class UzsakymasForm(forms.ModelForm):
+    class Meta:
+        model=Uzsakymas
+        fields = [
+            'perkamas_kiekis','sandelio_id','krepselio_id'
+        ]
+        widgets={'sandelio_id':forms.HiddenInput(),
+                 'krepselio_id':forms.HiddenInput(),
+        }
+
+
+class ProfilioForm(forms.ModelForm):
+    class Meta:
+        model = Profilis
+        fields = ['adresas','telefono_numeris','nuotrauka']
+
+
+class PirkimoProfilioForm(forms.ModelForm):
+    adresas=forms.CharField(disabled=True)
+    telefono_numeris=forms.IntegerField(disabled=True)
+    class Meta:
+        model=Profilis
+        fields = ['adresas','telefono_numeris']
+
+
+class UserForm(forms.ModelForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['email']
+
+
+class AtsiliepimuForm(forms.ModelForm):
+    class Meta:
+        model=Atsiliepimai
+        fields=['atsiliepimas','vartotojas','prekes_id']
+        widgets = {'vartotojas': forms.HiddenInput(),
+                   'prekes_id':forms.HiddenInput(),
+                   'atsiliepimas':forms.Textarea(attrs={'rows': 6, 'cols': 100})
+                   }
+
+
+class PrekesIkelimasForm(forms.ModelForm):
+    class Meta:
+        model=Preke
+        fields = ['nuotrauka','pavadinimas','kaina','pardavejas_id','aprasymas',]
+        widgets = {'pardavejas_id': forms.HiddenInput()}
+
+
+class SandelysForm(forms.ModelForm):
+    class Meta:
+        model=Sandelys
+        fields = ['pridetas_kiekis','prekes_id']
+
+    def __init__(self, request, *args, **kwargs):
+        super(SandelysForm,self).__init__(*args, **kwargs)
+        self.fields['prekes_id'].queryset = Preke.objects.filter(pardavejas_id=request.user.pardavejas.id)
+
+
+class PardavejoForm(forms.ModelForm):
+    class Meta:
+        model=Pardavejas
+        fields = ['pavad','priklauso']
+        widgets = {'priklauso': forms.HiddenInput()}
+
+            ----------------URLS---------------
+
+            from django.urls import path,include
+from django.contrib import admin
+
+from . import views
+urlpatterns = [
+
+    path('',views.index,name='index'),
+    path('admin/', admin.site.urls),
+    path('register/', views.register, name='register'),
+    path('kontaktai/', views.kontaktai, name='kontaktai'),
+    path('paieska/', views.paieska, name='paieska'),
+    path(r'^i18n/', include('django.conf.urls.i18n')),
+    path('/code',views.code,name='code'),
+
+    path('profilis/', views.profilis, name='profilis'),
+    path('profilis/ikelimas/', views.ikelimas, name='ikelimas'),
+    path('profilis/ikelimas/sukurimas',views.pardavejas_kurimas,name='pardavejo_kurimas'),
+
+    path('prekes/', views.prekes, name='prekes'),
+    path('prekes/<int:preke_id>', views.preke, name='preke'),
+
+    path('krepselis/<int:id>', views.KrepselisDetailView.as_view(), name='krepselis'),
+    path('krepselis/<int:id>/delete', views.KrepsDelete, name='krepselis_delete'),
+    # path('krepselis/<int:id>/update',views.KrepsUpdate, name='krepselis_update'),
+    path('krepselis/<int:id>/pirkimas', views.pirkimas,name='krepselis_pirkimas'),
+
+    path('pardavejai/', views.PardavejasListView.as_view(), name='pardavejai'),
+    path('pardavejai/<int:pardavejas_id>', views.Pardavejo_prekes, name='pardavejas'),
+]
+
+        </div>
+    </div>
+
+<script src="{% static 'js/ace.js' %}" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.session.setMode("ace/mode/python");
+</script>
+
+</body>
+</html>

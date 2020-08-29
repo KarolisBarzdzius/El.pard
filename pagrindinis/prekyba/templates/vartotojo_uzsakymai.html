@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container">
+<p><strong>Vartotojas:</strong> {{ user }}</p>
+</hr>
+</br>
+</div>
+{% if object.vartotojas == user %}
+<div style="margin-left:20px;margin-top:20px">
+    <h4>{% trans "Uzsakymai" %}:</h4>
+
+{% for x in preke.uzsakymas.all %}
+    <hr>
+    <p><strong>{% trans "Preke" %}:</strong> {{ x.prekes_id.pavadinimas }}</p>
+    <p>
+        <strong>{% trans "Kiekis" %}:</strong>{{ x.prekiu_kiekis }} <strong>
+        {% trans "Vnt. Kaina" %}:</strong> {{ x.prekes_id.kaina }}
+    </p>
+    <p><strong>{% trans "Kaina" %}:</strong> {{ x.kaina }}</p>
+{% endfor %}
+
+    <hr>
+    <h4>{% trans "Is viso" %}: {{ krepselis.bendra_suma }}</h4>
+    <hr>
+
+    <div>
+      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="">{% trans "Redaguoti" %}</a>
+      <a class="btn btn-danger btn-sm mt-1 mb-1" href="">{% trans "Ištrinti" %}</a>
+    </div>
+
+    {% else %}
+    <p>{% trans "Krepselis Tuscias" %}</p>
+{% endif %}
+</div>
+{% endblock %}
